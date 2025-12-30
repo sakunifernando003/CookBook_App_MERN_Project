@@ -5,8 +5,9 @@ const getRecipes=async(req,res)=>{
     return res.json(recipes)
 }
 
-const getRecipe=(req,res)=>{
-    res.json({message:"hello"})
+const getRecipe=async(req,res)=>{
+    const recipe=await Recipes.findById(req.params.id)
+    res.json(recipe)
 }
 
 const addRecipe = async (req, res) => {
