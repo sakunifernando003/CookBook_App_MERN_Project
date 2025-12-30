@@ -51,8 +51,19 @@ const editRecipe=async(req,res)=>{
 
 }
 
-const deleteRecipe=(req,res)=>{
-    res.json({message:"hello"})
+const deleteRecipe = async (req, res) => {
+  try {
+    const recipe = await Recipes.findByIdAndDelete(req.params.id)
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" })
+    }
+
+    res.json({ message: "Recipe deleted successfully" })
+  } catch (err) {
+    res.status(400).json({ message: "Invalid recipe ID" })
+  }
 }
+
 
 module.exports={getRecipes,getRecipe,addRecipe,editRecipe,deleteRecipe}
