@@ -37,8 +37,18 @@ const addRecipe = async (req, res) => {
 }
 
 
-const editRecipe=(req,res)=>{
-    res.json({message:"hello"})
+const editRecipe=async(req,res)=>{
+     const { title, ingredients, instructions, time, coverImage } = req.body
+     let recipe=await Recipes.findById(req.params.id)
+     try{
+     if(recipe){
+        await Recipes.findByIdAndUpdate(req.params.id,req.body,{new:true})
+        res.json({title, ingredients, instructions, time, coverImage})
+     }
+    }catch(err){
+        return res.status(404).json({message:"error"})
+    }
+
 }
 
 const deleteRecipe=(req,res)=>{
